@@ -4,7 +4,6 @@ Ask natural-language questions of the [UCI Online Retail II](https://archive.ics
 
 This is a personal learning project. It is built to show two things: **choosing the right architecture for tabular questions**, and **evaluating the system instead of only demoing it**.
 
-
 ## The problem
 
 Typical questions look like:
