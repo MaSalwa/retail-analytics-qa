@@ -20,7 +20,7 @@ Those are **aggregations over a table**, not lookup in a paragraph. A vector RAG
 | Piece | Role |
 | --- | --- |
 | **Main system** | Clean the Excel file with pandas, then query it with a LlamaIndex pandas/SQL-style engine and **Google Gemini** (free tier). The model writes dataframe operations; pandas computes the number. |
-| **Comparison** | A short notebook that runs **naive vector RAG** on the same questions, so the failure mode is visible (wrong chunk, incomplete context, confident but false totals). |
+| **Comparison** | A notebook that runs **naive vector RAG** over a fixed random sample of invoice lines for the same questions, making the incomplete-context failure mode visible. |
 | **Evaluation** | A small gold set with numeric ground truth: exact/tolerance match first, then **Gemini as judge** on the written answer (correctness and faithfulness to the tool output). |
 
 Gemini is the only paid API this repo uses. Embeddings are used only in the naive-RAG comparison, cached locally, and not re-run by default.
@@ -43,7 +43,7 @@ data/                             # Online Retail II Excel (see data/README.md)
 1. Python 3.11+ recommended.
 2. Copy `.env.example` to `.env` and set `GOOGLE_API_KEY` from [Google AI Studio](https://aistudio.google.com/apikey).
 3. `pip install -r requirements.txt`
-4. Work through the notebooks in order.
+4. For the main evaluation workflow, run notebooks 01, 02, and 04. Notebook 03 is a separate naive-RAG comparison and embeds a 50-row sample on first run; the vectors are cached under the ignored `data/processed/` directory.
 
 Do not commit `.env`. Vector stores and embedding caches stay gitignored.
 
@@ -63,5 +63,5 @@ The copy used here is `data/online_retail_II.xlsx`, sheet `Year 2009-2010`.
 
 1. Explore and clean the sheet.
 2. Implement table Q&A with LlamaIndex and Gemini.
-3. Show why naive RAG fails on the same gold questions.
-4. Evaluate answers (numeric + LLM-as-judge) and write up failure modes.
+3. Evaluate table-Q&A answers (numeric + LLM-as-judge) and write up failure modes.
+4. Show why naive RAG fails on the same gold questions.
